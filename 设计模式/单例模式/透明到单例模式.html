@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+  /**
+ *   实现一个“透明”的单例类，用户从这个类中创建对象的时候，可以像使用其他任何普通类一样。
+ */
+
+  let CreateDiv = (function () {
+    let instance;
+
+    let CreateDiv = function (html) {
+      if (instance) {
+        return instance;
+      }
+      this.html = html;
+      this.init();
+
+      return (instance = this);
+    };
+
+    CreateDiv.prototype.init = function () {
+      let div = document.createElement('div');
+      div.innerHTML = this.html;
+      document.body.appendChild(div);
+    };
+
+    return CreateDiv;
+  })();
+
+  let a = new CreateDiv('sven1');
+  let b = new CreateDiv('sven2');
+
+  console.log(a === b);
+
+</script>
+
+</html>
