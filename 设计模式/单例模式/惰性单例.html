@@ -12,14 +12,20 @@
     <button id="loginBtn">登录</button>
 </body>
 <script>
-    let CreateLoginLayer = function () {
-        let div = document.createElement('div');
-        div.innerHTML = `我是登录浮窗`;
-        div.style.display = `none`;
-        document.body.appendChild(div);
+    let CreateLoginLayer = (function () {
+        let div;
 
-        return div;
-    }
+        return function () {
+            if (!div) {
+                div = document.createElement('div');
+                div.innerHTML = `我是登录浮窗`;
+                div.style.display = `none`;
+                document.body.appendChild(div);
+            }
+
+            return div;
+        };
+    })()
 
     document.getElementById('loginBtn').onclick = function () {
         let loginLayer = new CreateLoginLayer();
