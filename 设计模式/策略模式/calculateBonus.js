@@ -1,14 +1,26 @@
+let performanceS = function (salary) {
+    return salary * 4;
+}
+
+let performanceA = function (salary) {
+    return salary * 3;
+}
+
+let performanceB = function (salary) {
+    return salary * 2;
+}
+
 let calculateBonus = function (performanceLevel, salary) {
     if (performanceLevel === 'S') {
-        return salary * 4;
+        return performanceS(salary);
     }
 
     if (performanceLevel === 'A') {
-        return salary * 3;
+        return performanceA(salary);
     }
 
     if (performanceLevel === 'B') {
-        return salary * 2;
+        return performanceB(salary);
     }
 }
 
