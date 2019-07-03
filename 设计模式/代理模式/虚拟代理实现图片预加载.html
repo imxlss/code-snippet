@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    let myImage = (function () {
+        let imgNode = document.createElement('img');
+        console.log(imgNode);
+        document.body.appendChild(imgNode);
+
+        return {
+            setSrc: function (src) {
+                imgNode.src = src;
+            }
+        }
+    })()
+
+    let proxyImage = (function () {
+        let img = new Image;
+        img.onload = function () {
+            myImage.setSrc(this.src);
+        }
+
+        return {
+            setSrc: function (src) {
+                myImage.setSrc('./timg.jpeg');
+                img.src = src;
+            }
+        }
+    })()
+
+    proxyImage.setSrc('https://user-gold-cdn.xitu.io/2019/7/3/16bb7f95230e1dcf?w=3024&h=4032&f=jpeg&s=2378642&w=3024&h=4032');
+</script>
+
+</html>
