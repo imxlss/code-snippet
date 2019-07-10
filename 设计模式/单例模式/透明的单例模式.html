@@ -13,9 +13,11 @@
 </body>
 
 <script>
+  // 面向对象的方式实现
+
   /**
- *   实现一个“透明”的单例类，用户从这个类中创建对象的时候，可以像使用其他任何普通类一样。
- */
+   *   实现一个“透明”的单例类，用户从这个类中创建对象的时候，可以像使用其他任何普通类一样。
+   */
 
   let CreateDiv = (function () {
     let instance;
@@ -43,7 +45,6 @@
   let b = new CreateDiv('sven2');
 
   console.log(a === b);
-
 </script>
 
 </html>
