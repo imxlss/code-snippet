@@ -12,7 +12,7 @@
     <button id="loginBtn">登录</button>
 </body>
 <script>
-    let CreateLoginLayer = (function () {
+    let createLoginLayer = (function () {
         let div;
 
         return function () {
@@ -28,7 +28,7 @@
     })()
 
     document.getElementById('loginBtn').onclick = function () {
-        let loginLayer = new CreateLoginLayer();
+        let loginLayer = createLoginLayer();
         loginLayer.style.display = `block`;
     }
 </script>
