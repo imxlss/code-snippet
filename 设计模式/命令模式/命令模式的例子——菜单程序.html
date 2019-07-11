@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="button1">button1</button>
+    <button id="button2">button2</button>
+    <button id="button3">button3</button>
+</body>
+<script>
+    let btn1 = document.getElementById('button1');
+    let btn2 = document.getElementById('button2');
+    let btn3 = document.getElementById('button3');
+
+    // setCommand函数负责往按钮上面安装命令
+    let setCommand = function (button, command) {
+        button.onclick = function () {
+            command.execute();
+        }
+    }
+
+    // 行为
+    let MenuBar = {
+        refresh: function () {
+            console.log('刷新菜单目录');
+        }
+    }
+
+    let SubMenu = {
+        add: function () {
+            console.log('增加子菜单');
+        },
+        delete: function () {
+            console.log('删除子菜单');
+        }
+    }
+
+    // 将行为封装在命令类中
+
+    let RefreshMenuBarCommand = function (receiver) {
+        this.receiver = receiver;
+    }
+    RefreshMenuBarCommand.prototype.execute = function () {
+        this.receiver.refresh();
+    }
+
+    let AddSubMenuCommand = function (receiver) {
+        this.receiver = receiver;
+    }
+
+    AddSubMenuCommand.prototype.execute = function () {
+        this.receiver.add();
+    }
+
+    let DeleteSubMenuCommand = function (receiver) {
+        this.receiver = receiver;
+    }
+
+    DeleteSubMenuCommand.prototype.execute = function () {
+        this.receiver.delete();
+    }
+
+    // 把命令接收者传入到command对象中，并且把command对象安装到button上面
+
+    let refreshMenuBarCommand = new RefreshMenuBarCommand(MenuBar);
+    let addSubMenuCommand = new AddSubMenuCommand(SubMenu);
+    let deleteSubMenuCommand = new DeleteSubMenuCommand(SubMenu);
+
+    setCommand(button1, refreshMenuBarCommand);
+    setCommand(button2, addSubMenuCommand);
+    setCommand(button3, deleteSubMenuCommand);
+</script>
+
+</html>
