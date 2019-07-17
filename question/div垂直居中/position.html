@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div.parent {
+            position: relative;
+        }
+
+        div.child {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent" style="height: 500px;border:1px solid #ccc;">
+        <div class="child" style="height: 50px;width:50px;background:#ccc;"></div>
+    </div>
+</body>
+
+</html>
