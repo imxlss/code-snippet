@@ -134,3 +134,25 @@ JavaScript 中常用的有`虚拟代理`和`缓存代理`
 
 - 表示对象的部分-整体层次结构
 - 客户希望统一对待树中的所有对象
+
+## 模板方法模式
+
+模板方法模式是一种只需使用继承就可以实现的模式。
+
+模板方法是一种严重依赖抽象类的设计模式。
+
+```js
+Beverage.prototype.init = function() {
+  this.boilWater();
+  this.brew();
+  this.pourInCup();
+  this.addCondiments();
+};
+```
+
+`Beverage.prototype.init` 就是模板方法。原因是，该方法中封装了子类的算法框架，它作为一个算法的模板，知道子类以何种顺序去执行哪些方法。
+
+### 应用场景
+
+- 封装算法框架
+- 钩子方法
