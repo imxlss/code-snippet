@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        article :first-of-type {
+            background-color: pink;
+        }
+
+        /* article :first-of-type  <=> article *:first-of-type */
+    </style>
+</head>
+
+<body>
+    <article>
+        <div>This `div` is first!</div>
+        <div>This <span>nested `span` is first</span>!</div>
+        <div>This <em>nested `em` is first</em>, but this <em>nested `em` is last</em>!</div>
+        <div>This <span>nested `span` gets styled</span>!</div>
+        <b>This `b` qualifies!</b>
+        <div>This is the final `div`.</div>
+    </article>
+</body>
+
+</html>
+
+
+<!-- :first-of-type表示一组兄弟元素中其类型的第一个元素。 -->
+<!-- 当不存在简单选择器时，通配符(*)是默认应用的。  -->
