@@ -1,3 +1,7 @@
+/**
+ * 入口文件
+ */
+
 let server = require('./server');
 let router = require('./router');
 let requestHandlers = require('./requestHandlers');
