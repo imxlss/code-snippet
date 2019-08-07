@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul>
+        <li>hello 1</li>
+        <li>hello 2</li>
+        <li>hello 3</li>
+        <li>hello 4</li>
+    </ul>
+</body>
+<script>
+    let ul = document.querySelectorAll('ul')[0]
+    let aLi = document.querySelectorAll('li')
+    ul.addEventListener('click', function (e) {
+        let oLi1 = e.target
+        let oLi2 = e.currentTarget
+        console.log(oLi1) //  被点击的li
+        console.log(oLi2) // ul
+        console.log(oLi1 === oLi2) // false
+    })
+</script>
+
+</html>
