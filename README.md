@@ -156,3 +156,7 @@ Beverage.prototype.init = function() {
 
 - 封装算法框架
 - 钩子方法
+
+## 享元模式
+
+享元模式是一种用于性能优化的模式。
