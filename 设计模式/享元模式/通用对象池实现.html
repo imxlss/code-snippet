@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  let objectPoolFactory = function (createObjFn) {
+    let objectPool = [];
+
+    return {
+      create: function () {
+
+        let obj = objectPool.length === 0 ? createObjFn.apply(this, arguments) : objectPool.shift();
+        return obj;
+      },
+
+      recover: function (obj) {
+        objectPool.push(obj);
+      }
+    }
+  };
+
+  // 装载一些iframe的对象池
+
+  let iFrameFactory = objectPoolFactory(function () {
+    let iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+
+    iframe.onload = function () {
+      iframe.onload = null;
+      iFrameFactory.recover(iframe);
+    }
+    return iframe;
+  });
+
+  let iframe1 = iFrameFactory.create();
+  iframe1.src = 'https://www.baidu.com';
+
+  let iframe2 = iFrameFactory.create();
+  iframe2.src = 'https://www.taobao.com';
+
+  setTimeout(() => {
+    let iframe3 = iFrameFactory.create();
+    iframe3.src = 'https://www.163.com';
+  }, 3000);
+</script>
+
+</html>
