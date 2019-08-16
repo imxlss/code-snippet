@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .list {
+      background-color: skyblue;
+      margin: 10px;
+    }
+
+    /*     .list:not(:nth-child(4n)) {
+      margin-right: calc(4% / 3);
+    } */
+
+    .list:last-child {
+      margin-right: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <canvas class="list" width="40" height="50"></canvas>
+    <canvas class="list" width="60" height="30"></canvas>
+    <canvas class="list" width="50" height="60"></canvas>
+    <canvas class="list" width="70" height="30"></canvas>
+    <canvas class="list" width="80" height="50"></canvas>
+    <canvas class="list" width="70" height="70"></canvas>
+    <canvas class="list" width="60" height="50"></canvas>
+    <canvas class="list" width="40" height="50"></canvas>
+    <canvas class="list" width="50" height="60"></canvas>
+    <canvas class="list" width="70" height="30"></canvas>
+    <canvas class="list" width="80" height="50"></canvas>
+  </div>
+</body>
+
+</html>
