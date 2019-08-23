@@ -9,10 +9,100 @@
 </head>
 
 <body>
+  <label for="colorSelect">选择颜色：</label>
+  <select name="color" id="colorSelect">
+    <option value="">请选择</option>
+    <option value="red">红色</option>
+    <option value="blue">蓝色</option>
+  </select>
 
+  <label for="memorySelect">选择颜色：</label>
+  <select name="color" id="memorySelect">
+    <option value="">请选择</option>
+    <option value="32G">32G</option>
+    <option value="16G">16G</option>
+  </select>
+
+  <label for="numberInput">输入购买数量：</label>
+  <input id="numberInput" type="number">
+
+  <br>
+  您选择了颜色：
+  <div id="colorInfo"></div>
+  <br>
+  您选择了内存：
+  <div id="memoryInfo"></div>
+  您输入了数量：
+  <div id="numberInfo"></div>
+  <button id="nextBtn" disabled="true">请选择手机颜色和购买数量</button>
 </body>
 <script>
-  
+  let goods = {
+    "red|32G": 3,
+    "red|16G": 0,
+    "blue|32G": 1,
+    "blue|16G": 6
+  };
+
+  let mediator = (function () {
+    let colorSelect = document.querySelector('#colorSelect'),
+      memorySelect = document.querySelector('#memorySelect'),
+      numberInput = document.querySelector('#numberInput'),
+      colorInfo = document.querySelector('#colorInfo'),
+      memoryInfo = document.querySelector('#memoryInfo'),
+      numberInfo = document.querySelector('#numberInfo'),
+      nextBtn = document.querySelector('#nextBtn');
+
+    return {
+      changed: function (obj) {
+        let color = colorSelect.value,
+          memory = memorySelect.value,
+          number = numberInput.value,
+          stock = goods[`${color}|${memory}`];
+
+        if (obj === colorSelect) {
+          colorInfo.innerHTML = color;
+        } else if (obj === memorySelect) {
+          memoryInfo.innerHTML = memory;
+        } else if (obj === numberInput) {
+          numberInfo.innerHTML = number;
+        }
+
+        if (!color) {
+          nextBtn.disabled = true;
+          nextBtn.innerHTML = `请选择手机颜色`;
+          return;
+        }
+
+        if (!memory) {
+          nextBtn.disabled = true;
+          nextBtn.innerHTML = `请选择内存大小`;
+          return;
+        }
+
+        if (!Number.isInteger(number - 0) || number <= 0) {
+          nextBtn.disabled = true;
+          nextBtn.innerHTML = `请输入正确的购买数量`;
+          return;
+        }
+
+        nextBtn.disabled = false;
+        nextBtn.innerHTML = `放入购物车`
+      }
+    }
+  })()
+
+  colorSelect.onchange = function () {
+    mediator.changed(this);
+  }
+
+  memorySelect.onchange = function () {
+    mediator.changed(this);
+  }
+
+  numberInput.oninput = function () {
+    mediator.changed(this);
+  }
 </script>
 
 </html>
