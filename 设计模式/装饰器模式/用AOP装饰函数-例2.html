@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="button">click</button>
+</body>
+<script>
+  Function.prototype.after = function (afterfn) {
+    let _self = this;
+
+    return function () {
+      let ret = _self.apply(this, arguments);
+      afterfn.apply(this, arguments);
+      return ret;
+    };
+  };
+
+  window.onload = function () {
+    alert(1);
+  }
+
+  window.onload = (window.onload || function () {}).after(function () {
+    alert(2);
+  }).after(function () {
+    alert(3);
+  }).after(function () {
+    alert(4);
+  });
+</script>
+
+</html>
