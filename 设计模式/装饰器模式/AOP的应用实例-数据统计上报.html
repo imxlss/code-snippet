@@ -14,6 +14,41 @@
   </button>
 </body>
 <script>
+  /*   let showLogin = function () {
+      console.log('打开登陆浮层');
+      log(this.getAttribute('tag'));
+    }
+
+    let log = function (tag) {
+      console.log(`上报标签为${tag}`);
+    }
+
+    document.getElementById('button').onclick = showLogin; */
+
+
+
+  // showLogin函数里，即负责打开登陆浮层，有负责数据上报，两个层面的功能耦合在一个函数里。使用AOP分离后，代码如下：
+
+  Function.prototype.after = function (afterfn) {
+    let _self = this;
+    return function () {
+      let ret = _self.apply(this, arguments);
+      afterfn.apply(this, arguments);
+      return ret;
+    }
+  }
+
+  let showLogin = function () {
+    console.log('打开登陆浮层');
+  }
+
+  let log = function (tag) {
+    console.log(`上报标签为${this.getAttribute('tag')}`);
+  }
+
+  showLogin = showLogin.after(log);
+
+  document.getElementById('button').onclick = showLogin;
 
 </script>
 
