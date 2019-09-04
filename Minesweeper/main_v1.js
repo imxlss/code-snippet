@@ -1,31 +1,35 @@
 // 单元格对象
 let Cell = function (row, column, opened = false, flagged = false, mined = false, neighborMineCount = 0) {
-  this.id = `${row}${column}`;
+  this.id = `${row}|${column}`;
   this.row = row;
   this.column = column;
   this.opened = opened;
   this.flagged = flagged;
   this.mined = mined;
   this.neighborMineCount = neighborMineCount;
+  this.neighbors = [];
 }
 
 
-Cell.prototype.getNeighbors = function (id) {
+Cell.prototype.getNeighbors = function (boardSize) {
   let neighbors = [];
 
-  let row = parseInt(id[0]);
-  let column = parseInt(id[1]);
+  neighbors.push(`${this.row - 1}|${this.column - 1}`);
+  neighbors.push(`${this.row - 1}|${this.column}`);
+  neighbors.push(`${this.row - 1}|${this.column + 1}`);
+  neighbors.push(`${this.row}|${this.column - 1}`);
+  neighbors.push(`${this.row}|${this.column + 1}`);
+  neighbors.push(`${this.row + 1}|${this.column - 1}`);
+  neighbors.push(`${this.row + 1}|${this.column}`);
+  neighbors.push(`${this.row + 1}|${this.column + 1}`);
 
-  neighbors.push(`${row - 1}${column - 1}`);
-  neighbors.push(`${row - 1}${column}`);
-  neighbors.push(`${row - 1}${column + 1}`);
-  neighbors.push(`${row}${column - 1}`);
-  neighbors.push(`${row}${column + 1}`);
-  neighbors.push(`${row + 1}${column - 1}`);
-  neighbors.push(`${row + 1}${column}`);
-  neighbors.push(`${row + 1}${column + 1}`);
+  this.neighbors = neighbors.filter(item => {
+    let cooridinates = item.split('|');
+    let row = cooridinates[0],
+      column = cooridinates[1];
 
-  return neighbors.filter(item => item.length === 2);
+    return row >= 0 && column >= 0 && column < boardSize && row < boardSize;
+  });
 }
 
 let Board = function (boardSize, mineCount) {
@@ -37,7 +41,8 @@ let Board = function (boardSize, mineCount) {
 Board.prototype.init = function () {
   for (let row = 0; row < this.boardSize; row++) {
     for (let column = 0; column < this.boardSize; column++) {
-      this.cellList[`${row}${column}`] = new Cell(row, column);
+      this.cellList[`${row}|${column}`] = new Cell(row, column);
+      this.cellList[`${row}|${column}`].getNeighbors(this.boardSize);
     }
   }
 };
@@ -46,27 +51,27 @@ Board.prototype.init = function () {
  * 随机放置地雷
  */
 Board.prototype.randomlyAssignMines = function () {
-
-  let getRandomInteger = function (min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
   let mineCooridinates = [];
   for (let i = 0; i < this.mineCount; i++) {
-    let randomRowCoordinate = getRandomInteger(0, this.boardSize);
-    let randomColumnCoordinate = getRandomInteger(0, this.boardSize);
+    let randomRowCoordinate = this.getRandomInteger(0, this.boardSize);
+    let randomColumnCoordinate = this.getRandomInteger(0, this.boardSize);
 
-    let cell = randomRowCoordinate + '' + randomColumnCoordinate;
+    let cellId = `${randomRowCoordinate}|${randomColumnCoordinate}`;
 
-    while (mineCooridinates.includes(cell)) {
-      randomRowCoordinate = getRandomInteger(0, this.boardSize);
-      randomColumnCoordinate = getRandomInteger(0, this.boardSize);
-      cell = randomRowCoordinate + '' + randomColumnCoordinate;
+    while (mineCooridinates.includes(cellId)) {
+      randomRowCoordinate = this.getRandomInteger(0, this.boardSize);
+      randomColumnCoordinate = this.getRandomInteger(0, this.boardSize);
+      cellId = `${randomRowCoordinate}|${randomColumnCoordinate}`;
     }
 
-    mineCooridinates.push(cell);
-    this.cellList[cell].mined = true;
+    mineCooridinates.push(cellId);
+    console.log(cellId);
+    this.cellList[cellId].mined = true;
   }
+}
+
+Board.prototype.getRandomInteger = function (min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
 Board.prototype.calculateNeighborMineCounts = function () {
@@ -75,13 +80,12 @@ Board.prototype.calculateNeighborMineCounts = function () {
 
   for (let row = 0; row < this.boardSize; row++) {
     for (let column = 0; column < this.boardSize; column++) {
-      let id = row + "" + column;
-      cell = this.cellList[id];
-      if (!cell.mined) {
-        let neighbors = cell.getNeighbors(id);
+      cell = this.cellList[`${row}|${column}`];
+
+      if (cell.mined === false) {
         neighborMineCount = 0;
-        for (let i = 0; i < neighbors.length; i++) {
-          neighborMineCount += this.isMined(neighbors[i]);
+        for (let i = 0; i < cell.neighbors.length; i++) {
+          neighborMineCount += this.isMined(cell.neighbors[i]);
         }
         cell.neighborMineCount = neighborMineCount;
       }
@@ -102,7 +106,7 @@ Board.prototype.isMined = function (id) {
   return mined;
 }
 
-let board = new Board(4, 5);
+let board = new Board(3, 3);
 board.init();
 board.randomlyAssignMines();
 board.calculateNeighborMineCounts();
