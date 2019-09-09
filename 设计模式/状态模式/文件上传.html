@@ -64,8 +64,8 @@
     <button data-action="button2">删除</button>
     `;
     document.body.appendChild(this.dom);
-    this.button1 = this.dom.querySelector('[data-action-"button1"]');
-    this.button2 = this.dom.querySelector('[data-action-"button2"]');
+    this.button1 = this.dom.querySelector('[data-action="button1"]');
+    this.button2 = this.dom.querySelector('[data-action="button2"]');
     this.bindEvent();
   }
 
@@ -95,6 +95,54 @@
       }
     }
   }
+
+  Upload.prototype.changeState = function (state) {
+    switch (state) {
+      case 'sign':
+        this.plugin.sign();
+        this.button1.innerHTML = '扫描中，任何操作无效';
+        break;
+      case 'uploading':
+        this.plugin.uploading();
+        this.button1.innerHTML = '正在上传，点击暂停';
+        break;
+      case 'pause':
+        this.plugin.pause();
+        this.button1.innerHTML = '已暂停，点击继续上传';
+        break;
+      case 'done':
+        this.plugin.done();
+        this.button1.innerHTML = '上传完成';
+        break;
+      case 'error':
+        this.button1.innerHTML = '上传失败';
+        break;
+      case 'del':
+        this.plugin.del();
+        this.dom.parentNode.removeChild(this.dom);
+        console.log('上传完成');
+        break;
+    }
+    this.state = state;
+  }
+
+  let uploadObj = new Upload('Javascript设计模式与开发实践');
+
+  uploadObj.init();
+
+  window.external.upload = function (state) {
+    uploadObj.changeState(state);
+  }
+
+  window.external.upload('sign');
+
+  setTimeout(() => {
+    window.external.upload('uploading');
+  }, 1000);
+
+  setTimeout(() => {
+    window.external.upload('done');
+  }, 5000);
 </script>
 
 </html>
