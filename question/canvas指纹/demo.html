@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+</body>
+<script>
+  function bin2hex(s) {
+    let i, l, o = "",
+      n;
+    s += "";
+    for (i = 0, l = s.length; i < l; i++) {
+      n = s.charCodeAt(i).toString(16)
+      o += n.length < 2 ? "0" + n : n;
+    }
+    return o;
+  }
+  let canvas = document.createElement('canvas');
+  let ctx = canvas.getContext('2d');
+  ctx.fillStyle = "#f60";
+  ctx.fillRect(125, 1, 62, 20);
+  let b64 = canvas.toDataURL().replace("data:image/png;base64,", "");
+  let bin = atob(b64);
+  let crc = bin2hex(bin.slice(-16, -12));
+  console.log(crc);
+</script>
+
+</html>
