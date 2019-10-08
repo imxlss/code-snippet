@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <p>paragraph</p>
+  <style>
+    #first {
+      color: green;
+    }
+
+    #second {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="first"></ul>
+  <script>
+    function addMessage(element, message) {
+      let messageElement = document.createElement('li');
+      messageElement.textContent = message;
+      element.appendChild(messageElement);
+    }
+
+    let first = document.getElementById('first');
+    addMessage(first, 'Page loading');
+  </script>
+
+  <ul id="second"></ul>
+  <script>
+    document.body.addEventListener('mousemove', function () {
+      let second = document.getElementById('second');
+      addMessage(second, 'Event: mousemove');
+    });
+
+    document.body.addEventListener('click', function () {
+      let second = document.getElementById('second');
+      addMessage(second, 'Event: click');
+    })
+  </script>
+</body>
+
+</html>
