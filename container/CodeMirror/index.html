@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link href="codemirror/lib/codemirror.css" rel="stylesheet" type="text/css">
+  <link href="codemirror/theme/monokai.css" rel="stylesheet" type="text/css">
+  <link href="codemirror/addon/display/fullscreen.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <form action="post.php" method="post">
+    <textarea id="code" name="code"></textarea>
+  </form>
+</body>
+<!-- 引入CodeMirror核心文件 -->
+<script type="text/javascript" src="codemirror/lib/codemirror.js"></script>
+
+<script type="text/javascript" src="codemirror/mode/markdown/markdown.js"></script>
+<script type="text/javascript" src="codemirror/mode/gfm/gfm.js"></script>
+
+<!-- CodeMirror支持不同语言，根据需要引入JS文件 -->
+<!-- 因为HTML混合语言依赖Javascript、XML、CSS语言支持，所以都要引入 -->
+<script type="text/javascript" src="codemirror/mode/javascript/javascript.js"></script>
+<script type="text/javascript" src="codemirror/mode/xml/xml.js"></script>
+<script type="text/javascript" src="codemirror/mode/css/css.js"></script>
+<script type="text/javascript" src="codemirror/mode/htmlmixed/htmlmixed.js"></script>
+
+<!-- 下面分别为显示行数、括号匹配和全屏插件 -->
+<script type="text/javascript" src="codemirror/addon/selection/active-line.js"></script>
+<script type="text/javascript" src="codemirror/addon/edit/matchbrackets.js"></script>
+<script type="text/javascript" src="codemirror/addon/display/fullscreen.js"></script>
+<script>
+  var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    lineNumbers: true, // 显示行数
+    indentUnit: 4, // 缩进单位为4
+    styleActiveLine: true, // 当前行背景高亮
+    matchBrackets: true, // 括号匹配
+    mode: 'gfm', // HMTL混合模式
+    lineWrapping: true, // 自动换行
+    fullScreen: true
+  });
+  editor.setOption("extraKeys", {
+    // Tab键换成4个空格
+    Tab: function (cm) {
+      var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+      cm.replaceSelection(spaces);
+    },
+    // F11键切换全屏
+    "F11": function (cm) {
+      cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+    },
+    // Esc键退出全屏
+    "Esc": function (cm) {
+      if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+    }
+  });
+</script>
+
+</html>
